@@ -21,11 +21,13 @@
 //   }
 // }
 
-for (i=0; i <= 100; i++){
-  if (i % 3 == 0 && i % 5 == 0) console.log(`Fizz Buzz`)
-  else if (i % 3 == 0) console.log(`Fizz`)
-  else if (i % 5 == 0) console.log(`Buzz`)
-  else console.log(i)
+{
+  for (i=0; i <= 100; i++){
+    if (i % 3 == 0 && i % 5 == 0) console.log(`Fizz Buzz`)
+    else if (i % 3 == 0) console.log(`Fizz`)
+    else if (i % 5 == 0) console.log(`Buzz`)
+    else console.log(i)
+  }
 }
 
 // Part 2: Prime Time ===============================================================
@@ -50,6 +52,28 @@ for (i=0; i <= 100; i++){
 
 // console.log(4 % 1 == 0)
 
+{
+  let n = 4
+  let nextPrime
+  let i = n + 1
+
+  // While my nextPrime var is undefined, I need to loop and keep evaluating to find the next prime.
+  // Once I find the next prime, I'll assign it to the nextPrime variable, which will stop the loop.
+
+  // nextPrime === undefined
+  outerLoop: while (!nextPrime) {
+    for(let j=2; j < i; j++){
+      // if this evaluates to true, w know i is not a prime number
+      if (i % j === 0) {
+        i++
+        continue outerLoop
+      }
+    }
+    // If the code gets to this point in the while loop, we have found a prime number
+    nextPrime = i
+    console.log(nextPrime);
+  }
+}
 
 
 // Part 3: Feeling Loopy ============================================================
@@ -81,33 +105,76 @@ for (i=0; i <= 100; i++){
 // Use the example string provided above to test your program. Once you are confident it is working correctly, try the following string to see if your program works properly with other data.
 // Index,Mass (kg),Spring 1 (m),Spring 2 (m)\n1,0.00,0.050,0.050\n2,0.49,0.066,0.066\n3,0.98,0.087,0.080\n4,1.47,0.116,0.108\n5,1.96,0.142,0.138\n6,2.45,0.166,0.158\n7,2.94,0.193,0.174\n8,3.43,0.204,0.192\n9,3.92,0.226,0.205\n10,4.41,0.238,0.232
 
-n = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26"
-// nsplit = n.split(/\r?\n/)
-let cell1 = ''
-let cell2 = ''
-let cell3 = ''
-let cell4 = ''
-let cells = []
-numSinceLastCell = 0
+{
+  n = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26"
+  // nsplit = n.split(/\r?\n/)
+  let cell1 = ''
+  let cell2 = ''
+  let cell3 = ''
+  let cell4 = ''
+  let cells = []
 
-console.log(nsplit)
+  currentCell = 1
 
-// console.log(n.slice(0,2))
+  numSinceLastCell = 0
 
-for(let i=0; i <= n.length; i++) {
-  debugger
-  if ((n[i]+n[i+1]) != "\n") {
-    if (n[i] == `,`){
-      debugger
-      console.log(n.slice(numSinceLastCell,i))
-      // cells.push(n.slice(n,i))
-      numSinceLastCell = i + 1
-    } else {
-      debugger
-      console.log(`${n[i]} : ${numSinceLastCell}`);
-      // numSinceLastCell++;
+  // console.log(nsplit)
+
+  // console.log(n.slice(0,2))
+
+  // for(let i=0; i <= n.length; i++) {
+  //   debugger
+  //   if ((n[i]+n[i+1]) != "\n") {
+  //     if (n[i] == `,`){
+  //       debugger
+  //       console.log(n.slice(numSinceLastCell,i))
+  //       // cells.push(n.slice(n,i))
+  //       numSinceLastCell = i + 1
+  //     } else {
+  //       debugger
+  //       console.log(`${n[i]} : ${numSinceLastCell}`);
+  //       // numSinceLastCell++;
+  //     }
+  //   } else {
+  //     console.log("new row")
+  //   }
+  // }
+  // console.log();
+
+  for(let i=0; i <= n.length; i++) {
+
+    if(n[i] == ","){
+      currentCell++;
+      continue;
+    } 
+
+    if(n[i] === `\n`){
+      cell1 = ''
+      cell2 = ''
+      cell3 = ''
+      cell4 = ''
+      currentCell = 1
     }
-  } else {
-    console.log("new row")
+
+    switch (currentCell){
+      case 1:
+        cell1 += n[i]
+        break;
+      case 2:
+        cell2 += n[i]
+        break
+      case 3:
+        cell3 += n[i]
+        break
+      case 4:
+        cell4 += n[i]
+        break
+      default:
+        cell1
+    }
+
+    if ((currentCell === 4 && n[i + 1] === '\n') || i + 1 === n.length) {
+      console.log(cell1, cell2, cell3, cell4);
+    }
   }
 }
